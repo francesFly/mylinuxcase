@@ -5,19 +5,19 @@ $password=P("password");
 $password2=P("password2");
 
 if(!$username || !$password || !$password2){
-    errer("ÇëÊäÈëÍêÕûµÄ×¢²áĞÅÏ¢£¡");
+    errer("è¯·è¾“å…¥å®Œæ•´çš„æ³¨å†Œä¿¡æ¯ï¼");
 }
 
 if($password!=$password2){
-    errer("Á½´ÎÃÜÂë²»Ò»ÖÂ£¡");
+    errer("ä¸¤æ¬¡å¯†ç ä¸ä¸€è‡´ï¼");
 }
 
 $redisconnect=connectredis();
 if($redisconnect->get("user:username".$username.":userid")){
-    errer("ÄúÊäÈëµÄÓÃ»§ÃûÒÑ´æÔÚ£¬ÇëÖØĞÂÊäÈëÆäËûÓÃ»§Ãû£¡");
+    errer("æ‚¨è¾“å…¥çš„ç”¨æˆ·åå·²å­˜åœ¨ï¼Œè¯·é‡æ–°è¾“å…¥å…¶ä»–ç”¨æˆ·åï¼");
 }
 
 $userid=$redisconnect->incr("global.userid");
 $redisconnect->set("user:userid:".$userid.":username",$username);
 $redisconnect->set("user:userid:".$userid.":password",md5($password));
-success("×¢²á³É¹¦£¡");
+success("æ³¨å†ŒæˆåŠŸï¼");
