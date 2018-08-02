@@ -10,10 +10,10 @@
 <div id="header">
 <a href="/"><img style="border:none" src="logo.png" width="192" height="85" alt="Retwis"></a>
 <div id="navbar">
-<a href="index.php">Ö÷Ò³</a>
-| <a href="timeline.php">ÈÈµã</a>
+<a href="index.php">ä¸»é¡µ</a>
+| <a href="timeline.php">çƒ­ç‚¹</a>
 
-| <a href="logout.php">ÍË³ö</a>
+| <a href="logout.php">é€€å‡º</a>
 
 </div>
 </div>
