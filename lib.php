@@ -2,6 +2,9 @@
 function P($key){
     return $_POST[$key];
 }
+function G($key){
+    return $_GET[$key];
+}
 function errer($msg){
     include "head.php";
     echo $msg;

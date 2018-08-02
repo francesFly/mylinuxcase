@@ -13,7 +13,7 @@ if($password!=$password2){
 }
 
 $redisconnect=connectredis();
-if($redisconnect->get("user:username:".$username.":userid")){
+if($redisconnect->get("user:username:".$username)){
     errer("您输入的用户名已存在，请重新输入其他用户名！");
 }
 
