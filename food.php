@@ -1,4 +1,4 @@
-<div id="footer">redis版本的仿微博项目 <a href="http://redis.io">Redis key-value database</a></div>
+<div id="footer">redis鐗堟湰鐨勪豢寰崥椤圭洰 <a href="http://redis.io">Redis key-value database</a></div>
 </div>
 </body>
 </html>
