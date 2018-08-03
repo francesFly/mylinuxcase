@@ -25,4 +25,6 @@ $userid=$redisconnect->incr("global:userid");
 $redisconnect->set("user:userid:".$userid.":username",$username);
 $redisconnect->set("user:userid:".$userid.":password",md5($password));
 $redisconnect->set("user:username:".$username.":userid",$userid);
+$redisconnect->lpush("newuserlink",$userid);
+$redisconnect->ltrim("newuserlink",0,49);
 success("注册成功！");
