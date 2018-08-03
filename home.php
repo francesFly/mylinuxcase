@@ -24,7 +24,7 @@ $newlist=$redisconnect->sort('releasenewlink:'.$logininfo['userid'],array('sore'
 <?php echo $friendingnum;?> 关注<br>
 </div>
 </div>
-<?php foreach ($newlist as $key=>$values)?>
+<?php foreach ($newlist as $key=>$values){?>
 <div class="post">
 <a class="username" href="profile.php?u=test">test</a> <?php echo $values;?><br>
 <i>11 分钟前 通过 web发布</i>
