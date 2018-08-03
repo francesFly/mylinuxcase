@@ -36,3 +36,10 @@ function connectredis(){
     $redisconnect->connect('localhost',6379,1);
     return $redisconnect;
 }
+
+function islogin(){
+    if(!$_COOKIE['username'] || $_COOKIE['userid']){
+        return false;
+    }
+    return true;
+}

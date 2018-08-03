@@ -1,5 +1,8 @@
 <?php
 include 'lib.php';
+if(islogin()){
+    header('location:home.php');
+}
 $username=P("username");
 $password=P("password");
 $password2=P("password2");
