@@ -13,7 +13,7 @@ if($password!=$password2){
 }
 
 $redisconnect=connectredis();
-if($redisconnect->get("user:username:".$username)){
+if($redisconnect->get("user:username:".$username.":userid")){
     errer("您输入的用户名已存在，请重新输入其他用户名！");
 }
 
@@ -21,5 +21,5 @@ $userid=$redisconnect->incr("global.userid");
 //$redisconnect->set("user:userid:".$userid.":userid",$userid);
 $redisconnect->set("user:userid:".$userid.":username",$username);
 $redisconnect->set("user:userid:".$userid.":password",md5($password));
-$redisconnect->set("user:username:".$username,$userid);
+$redisconnect->set("user:username:".$username.":userid",$userid);
 success("注册成功！");
