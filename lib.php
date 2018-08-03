@@ -6,15 +6,15 @@ function G($key){
     return $_GET[$key];
 }
 function errer($msg){
-    include "head.php";
+    include 'head.php';
     echo $msg;
-    include "food.php";
+    include 'food.php';
     exit();
 }
 function success($msg){
-    include "head.php";
+    include 'head.php';
     echo $msg;
-    include "food.php";
+    include 'food.php';
     exit();
 }
 /*
