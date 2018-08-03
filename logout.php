@@ -1,4 +1,4 @@
 <?php
-setcookie("username",'');
-setcookie("userid",'');
-header("location:index.php");
+setcookie("username",'',-1);
+setcookie("userid",'',-1);
+header("location:index.php");exit();

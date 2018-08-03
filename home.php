@@ -2,7 +2,7 @@
 include 'head.php';
 include "lib.php";
 if(($logininfo=islogin())==false){
-    header("location:home.php");exit();
+    header("location:index.php");exit();
 }
 ?>
 <div id="postform">
