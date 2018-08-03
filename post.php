@@ -12,5 +12,13 @@ $postid=$redisconnect->incr('global:postid');
 $redisconnect->set("post:postid:".$postid.":contents",$contents);
 $redisconnect->set("post:postid:".$postid.":time",time());
 $redisconnect->set("post:postid:".$postid.":userid",$logininfo['userid']);
+
+//微博推送
+$redisconnect->lPush('releasenewlink:'.$logininfo['userid'],$postid);
+$fanslist=$redisconnect->sMembers('fans:'.$logininfo['userid']);
+foreach ($fanslist as $key=>$values){
+    $redisconnect->lPush('releasenewlink:'.$values,$postid);
+}
+
 header("location:home.php");exit();
 

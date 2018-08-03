@@ -16,7 +16,7 @@ if(!$currentid){
 $isfriending=$redisconnect->sismember('friending:'.$logininfo['userid'],$currentid);
 $friendingstatus=$isfriending?'取消关注':'立即关注';
 ?>
-<h2 class="username"><?php echo $fansname;?></h2>
+<h2 class="username"><?php echo $currentname;?></h2>
 <a href="follow.php?uid=<?php echo $currentid;?>&f=<?php echo $isfriending; ?>" class="button"><?php echo $friendingstatus; ?></a>
 
 <div class="post">
