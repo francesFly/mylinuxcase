@@ -1,7 +1,7 @@
 <?php
 include "lib.php";
 if(islogin()){
-    header("location:home.php");exit();
+    errer("请先退出登录，在进行登录！");
 }
 $username=P("username");
 $password=P("password");
@@ -17,6 +17,6 @@ $realpassw=$redisconnect->get("user:userid:".$userid.":password");
 if($realpassw!=md5($password)){
     errer("密码输入错误！");
 }
-setcookie("username",$username);
-setcookie("userid",$userid);
+setcookie("username",$username,time()+300);
+setcookie("userid",$userid,time()+300);
 header("location:home.php");

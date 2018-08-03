@@ -1,7 +1,7 @@
 <?php
 include "lib.php";
 if(islogin()){
-    header("location:home.php");exit();
+    errer("请先退出登录，在进行注册！");
 }
 $username=P("username");
 $password=P("password");

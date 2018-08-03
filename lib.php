@@ -38,8 +38,12 @@ function connectredis(){
 }
 
 function islogin(){
-    if(!$_COOKIE["username"] || $_COOKIE["userid"]){
+    $username=$_COOKIE["username"];
+    $userid=$_COOKIE["userid"];
+    if(!$username || !$userid){
         return false;
     }
-    return true;
+    setcookie("username",$username,time()+300);
+    setcookie("userid",$userid,time()+300);
+    return array('username'=>$username,'userid'=>$userid);
 }
