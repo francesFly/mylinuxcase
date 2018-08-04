@@ -7,9 +7,32 @@ if(($logininfo=islogin())==false){
 $redisconnect=connectredis();
 $friendingnum=$redisconnect->scard('friending:'.$logininfo['userid']);
 $fansnum=$redisconnect->scard('fans:'.$logininfo['userid']);
-$newnum=$redisconnect->ltrim('releasenewlink:'.$logininfo['userid'],0,50);
+//微博推送方式
+/* $newnum=$redisconnect->ltrim('releasenewlink:'.$logininfo['userid'],0,50); */
+//字符串存储
 /* $newlist=$redisconnect->sort('releasenewlink:'.$logininfo['userid'],array('sort'=>'desc','get'=>'post:postid:*:contents')); */
-$newnumlist=$redisconnect->sort('releasenewlink:'.$logininfo['userid'],array('sort'=>'desc'));
+//hush存储
+/* $newnumlist=$redisconnect->sort('releasenewlink:'.$logininfo['userid'],array('sort'=>'desc')); */
+//拉取存储
+$friendinglist=$redisconnect->sMembers('friending:'.$logininfo['userid']);
+$friendinglist[]=$logininfo['userid'];
+$pulltime=time();
+$pulllasttime=$redisconnect->get('pulltime:userid:'.$logininfo['userid']);//最后一次拉取时间
+if(!$pulllasttime){
+    $pulllasttime=0;
+}
+$redisconnect->set('pulltime:userid:'.$logininfo['userid'],$pulltime);
+$pullnewlistLast=array();
+foreach ($friendinglist as $key=>$values){
+    $pullnewlistLast=array_merge($pullnewlistLast,$redisconnect->zRangeByScore('releasedatas:userid'.$values,$pulllasttime,$pulltime));
+}
+sort($pullnewlistLast,SORT_NUMERIC);
+print_r($pullnewlistLast);
+foreach ($pullnewlistLast as $key=>$values){
+    $redisconnect->lPush('releasepast:'.$logininfo['userid'],$values);
+}
+$redisconnect->ltrim('releasepast:'.$logininfo['userid'],0,999);
+$newnumlist=$redisconnect->sort('releasepast:'.$logininfo['userid'],array('sort'=>'desc'));
 ?>
 <div id="postform">
 <form method="POST" action="post.php">

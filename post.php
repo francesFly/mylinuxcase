@@ -9,17 +9,26 @@ if(!$contents){
 }
 $redisconnect=connectredis();
 $postid=$redisconnect->incr('global:postid');
+$addtime=time();
+//字符类型存储
 /* $redisconnect->set("post:postid:".$postid.":contents",$contents);
-$redisconnect->set("post:postid:".$postid.":times",time());
+$redisconnect->set("post:postid:".$postid.":times",$addtime);
 $redisconnect->set("post:postid:".$postid.":userid",$logininfo['userid']); */
-$redisconnect->hMset('post:postid:'.$postid,array('contents'=>$contents,'times'=>time(),'userid'=>$logininfo['userid'],'username'=>$logininfo['username']));
+//hush存储
+$redisconnect->hMset('post:postid:'.$postid,array('contents'=>$contents,'times'=>$addtime,'userid'=>$logininfo['userid'],'username'=>$logininfo['username']));
 
 
-//微博推送
-$redisconnect->lPush('releasenewlink:'.$logininfo['userid'],$postid);
+//微博推送方式
+/* $redisconnect->lPush('releasenewlink:'.$logininfo['userid'],$postid);
 $fanslist=$redisconnect->sMembers('fans:'.$logininfo['userid']);
 foreach ($fanslist as $key=>$values){
     $redisconnect->lPush('releasenewlink:'.$values,$postid);
+}
+ */
+//微博拉取方式
+$redisconnect->zAdd('releasedatas:userid'.$logininfo['userid'],$addtime,$postid);
+if($redisconnect->zCard('releasedatas:userid'.$logininfo['userid'])>20){
+    $redisconnect->zRemRangeByRank('releasedatas:userid'.$logininfo['userid'],0,0);
 }
 
 header("location:home.php");exit();
