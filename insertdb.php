@@ -19,14 +19,15 @@ if($i==0){
 
 $sql=substr($sql, 0,-1);
 print_r($sql);
-$return=mysql_query($sql,$conn);
+/* $return=mysql_query($sql,$conn); */
+$return=$conn->query($sql);
 if(!$return){
     //导入到global:newsdatas中
     foreach ($redisconnect->lrange('global:bakpastid',0,-1) as $key=>$values){
         $postid=$redisconnect->lPop('global:bakpastid');
         $redisconnect->rPush('global:newsdatas',$postid);
     }
-    die('no insert: ' . mysql_error());
+    die('no insert: ' . $conn->error());
 }else{
     $redisconnect->del('global:bakpastid');
      echo 'ok';exit();

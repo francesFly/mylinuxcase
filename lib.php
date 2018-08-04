@@ -77,7 +77,7 @@ function calculatetime($times){
     }
 }
 function connectmysql(){
-    $conn=mysql_connect('127.0.0.1','root','root');
+   /*  $conn=mysql_connect('127.0.0.1','root','root');
     if(!$conn) {
         die('Not connected : ' . mysql_error());
     }
@@ -85,6 +85,13 @@ function connectmysql(){
     if (!$isusedb) {
         die("could not connect to the db:\n" .  mysql_error());
     }
-    mysql_query("set names utf8",$conn);//编码转化  
-    return $conn;
+    mysql_query("set names utf8",$conn);//编码转化   */
+    $mysqli = new mysqli("127.0.0.1", "root", "root", "weibodb");
+    
+    /* check connection */
+    if ($mysqli->connect_errno) {
+        printf("Connect failed: %s\n", $mysqli->connect_error);
+        exit();
+    }
+    return $mysqli;
 }
