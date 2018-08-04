@@ -9,7 +9,7 @@ while ($redisconnect->lLen('global:newsdatas') && $i++<1000){
     //备份现在要导入的数据
     $redisconnect->lPush('global:bakpastid',$postid);
     $postinfo=$redisconnect->hMget('post:postid:'.$postid,array('contents','times','userid','username'));
-    $sql.="insert into post ('postid','contents','times','userid','username') values (".$postid.",'".$postinfo['contents']."','".$postinfo['times']."',".$postinfo['userid'].",'".$postinfo['username']."');";
+    $sql.="insert into post ('postid','contents','times','userid','username') values (".$postid.",'".$postinfo['contents']."',".$postinfo['times'].",".$postinfo['userid'].",'".$postinfo['username']."');";
 }
 if($i==0){
     echo 'no job';exit();
