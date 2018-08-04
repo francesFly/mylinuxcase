@@ -49,8 +49,9 @@ function islogin(){
     $invalidation=$connectredis->get('user:userid:'.$userid.':loginvalidation');
     if($invalidation!=$loginvalidation){
         return false;
-    }      
-    $connectredis->set('user:userid:'.$userid.':loginvalidation',$loginvalidation,'ex',300);
+    }   
+    $connectredis->set('user:userid:'.$userid.':loginvalidation',$loginvalidation);
+    $connectredis->expire('user:userid:'.$userid.':loginvalidation',300);
     setcookie("loginvalidation",$loginvalidation,time()+300);
     setcookie("username",$username,time()+300);
     setcookie("userid",$userid,time()+300);
