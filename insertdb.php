@@ -18,7 +18,7 @@ if($i==0){
 }
 
 $sql=substr($sql, 0,-1);
-print_r($sql);
+//print_r($sql);
 /* $return=mysql_query($sql,$conn); */
 $return=$conn->query($sql);
 if(!$return){
