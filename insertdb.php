@@ -16,6 +16,7 @@ if($i==0){
 }
 
 $sql=substr($sql, 0,-1);
+print_r($sql);
 $mysqli = new mysqli("127.0.0.1", "root", "root", "weibodb");
 
 /* check connection */
