@@ -50,7 +50,8 @@ function islogin(){
     if($invalidation!=$loginvalidation){
         return false;
     }      
-    $connectredis->set('user:userid:'.$userid.':loginvalidation',$invalidation,'ex',300);
+    $connectredis->set('user:userid:'.$userid.':loginvalidation',$loginvalidation,'ex',300);
+    setcookie("loginvalidation",$loginvalidation,time()+300);
     setcookie("username",$username,time()+300);
     setcookie("userid",$userid,time()+300);
     return array('username'=>$username,'userid'=>$userid);
