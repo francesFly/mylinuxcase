@@ -25,10 +25,15 @@ foreach ($fanslist as $key=>$values){
     $redisconnect->lPush('releasenewlink:'.$values,$postid);
 }
  */
-//微博拉取方式
+//微博拉取方式   粉丝查看
 $redisconnect->zAdd('releasedatas:userid'.$logininfo['userid'],$addtime,$postid);
 if($redisconnect->zCard('releasedatas:userid'.$logininfo['userid'])>20){
     $redisconnect->zRemRangeByRank('releasedatas:userid'.$logininfo['userid'],0,0);
+}
+//个人查看 数据 1000
+$redisconnect->lPush('mynewdatas:'.$logininfo['userid'],$postid);
+if($redisconnect->llen('mynewdatas:'.$logininfo['userid'])>1000){
+    $redisconnect->rpoplpush('mynewdatas:'.$logininfo['userid'],'global:newsdatas');
 }
 
 header("location:home.php");exit();

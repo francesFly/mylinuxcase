@@ -76,3 +76,12 @@ function calculatetime($times){
         return $timesnum .'秒';
     }
 }
+function connectmysql(){
+    $conn=mysql_connect('127.0.0.1','root','root');
+    if(!$conn) {
+        die('Not connected : ' . mysql_error());
+    }
+    mysql_query('use weibodb',$conn);
+    mysql_query("set names utf8",$conn);//编码转化  
+    return $conn;
+}
