@@ -41,7 +41,7 @@ function connectredis(){
 function islogin(){
     $username=$_COOKIE["username"];
     $userid=$_COOKIE["userid"];
-    $loginvalidation=$_COOKIE["userid"];
+    $loginvalidation=$_COOKIE["loginvalidation"];
     if(!$username || !$userid || !$loginvalidation){
         return false;
     }
@@ -49,8 +49,7 @@ function islogin(){
     $invalidation=$connectredis->get('user:userid:'.$userid.':loginvalidation');
     if($invalidation!=$loginvalidation){
         return false;
-    }   
-    $connectredis->set('user:userid:'.$userid.':loginvalidation',$loginvalidation);
+    } 
     $connectredis->expire('user:userid:'.$userid.':loginvalidation',300);
     setcookie("loginvalidation",$loginvalidation,time()+300);
     setcookie("username",$username,time()+300);
