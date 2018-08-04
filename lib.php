@@ -71,7 +71,7 @@ function calculatetime($times){
     }elseif ($timesnum>3600){
         return floor($timesnum/3600) .'小时';
     }elseif ($timesnum>60){
-        return floor($timesnum/3600) .'分钟';
+        return floor($timesnum/60) .'分钟';
     }else{
         return $timesnum .'秒';
     }
