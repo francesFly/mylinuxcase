@@ -81,7 +81,10 @@ function connectmysql(){
     if(!$conn) {
         die('Not connected : ' . mysql_error());
     }
-    mysql_query('use weibodb',$conn);
+    $isusedb=mysql_query('use weibodb',$conn);
+    if (!$isusedb) {
+        die("could not connect to the db:\n" .  mysql_error());
+    }
     mysql_query("set names utf8",$conn);//编码转化  
     return $conn;
 }
