@@ -27,7 +27,6 @@ foreach ($friendinglist as $key=>$values){
     $pullnewlistLast=array_merge($pullnewlistLast,$redisconnect->zRangeByScore('releasedatas:userid'.$values,$pulllasttime+1,$pulltime));
 }
 sort($pullnewlistLast,SORT_NUMERIC);
-print_r($pullnewlistLast);
 foreach ($pullnewlistLast as $key=>$values){
     $redisconnect->lPush('releasepast:'.$logininfo['userid'],$values);
 }
