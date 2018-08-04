@@ -1,9 +1,11 @@
 <?php
 include "lib.php";
 $redisconnect=connectredis();
+if($redisconnect->lLen('global:newsdatas')){
+$conn=connectmysql();
+}
 $sql="insert into post ('postid','contents','times','userid','username') values";
 $i=0;
-
 while ($redisconnect->lLen('global:newsdatas') && $i++<1000){    
     $postid=$redisconnect->rPop('global:newsdatas');
     //备份现在要导入的数据
@@ -17,7 +19,6 @@ if($i==0){
 
 $sql=substr($sql, 0,-1);
 print_r($sql);
-$conn=connectmysql();
 $return=mysql_query($sql,$conn);
 if(!$return){
     //导入到global:newsdatas中
