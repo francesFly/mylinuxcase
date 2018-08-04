@@ -41,10 +41,24 @@ function connectredis(){
 function islogin(){
     $username=$_COOKIE["username"];
     $userid=$_COOKIE["userid"];
-    if(!$username || !$userid){
+    $loginvalidation=$_COOKIE["userid"];
+    if(!$username || !$userid || !$loginvalidation){
         return false;
     }
+    $connectredis=connectredis();
+    $invalidation=$connectredis->get('user:userid:'.$userid.':loginvalidation');
+    if($invalidation!=$loginvalidation){
+        return false;
+    }      
+    $connectredis->set('user:userid:'.$userid.':loginvalidation',$invalidation,'ex',300);
     setcookie("username",$username,time()+300);
     setcookie("userid",$userid,time()+300);
     return array('username'=>$username,'userid'=>$userid);
+}
+
+function randomstr(){
+    $str='qazwsxedcvfrtgbnhyujmkiolp1234567890-=%$#@!*&^()?ZAQWSXCDERFVBGTYHNMJUIKLOP';
+    $lstr=strrev(str_shuffle($str));
+    $randstr=substr($lstr, 2,18);
+    return $randstr;
 }

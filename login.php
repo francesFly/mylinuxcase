@@ -19,4 +19,8 @@ if($realpassw!=md5($password)){
 }
 setcookie("username",$username,time()+300);
 setcookie("userid",$userid,time()+300);
+$loginvalidation=randomstr();
+$redisconnect->set('user:userid:'.$userid.':loginvalidation',$loginvalidation,'ex',300);
+setcookie("loginvalidation",$loginvalidation,time()+300);
+
 header("location:home.php");
