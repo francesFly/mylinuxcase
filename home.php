@@ -8,7 +8,8 @@ $redisconnect=connectredis();
 $friendingnum=$redisconnect->scard('friending:'.$logininfo['userid']);
 $fansnum=$redisconnect->scard('fans:'.$logininfo['userid']);
 $newnum=$redisconnect->ltrim('releasenewlink:'.$logininfo['userid'],0,50);
-$newlist=$redisconnect->sort('releasenewlink:'.$logininfo['userid'],array('sore'=>'desc','get'=>'post:postid:*:contents'));
+/* $newlist=$redisconnect->sort('releasenewlink:'.$logininfo['userid'],array('sort'=>'desc','get'=>'post:postid:*:contents')); */
+$newnumlist=$redisconnect->sort('releasenewlink:'.$logininfo['userid'],array('sort'=>'desc'));
 ?>
 <div id="postform">
 <form method="POST" action="post.php">
@@ -24,10 +25,13 @@ $newlist=$redisconnect->sort('releasenewlink:'.$logininfo['userid'],array('sore'
 <?php echo $friendingnum;?> 关注<br>
 </div>
 </div>
-<?php foreach ($newlist as $key=>$values){?>
+<?php /* foreach ($newlist as $key=>$values){ */
+foreach ($newnumlist as $key=>$values){
+    $newinfo=$redisconnect->hMget('post:postid:'.$values,array('username','contents','times'));
+?>
 <div class="post">
-<a class="username" href="profile.php?u=test">test</a> <?php echo $values;?><br>
-<i>11 分钟前 通过 web发布</i>
+<a class="username" href="profile.php?u=<?php echo $newinfo['username'];?>"><?php echo $newinfo['username'];?></a> <?php echo $newinfo['contents'];?><br>
+<i><?php echo calculatetime($newinfo['times']);?>前 通过 web发布</i>
 </div>
 <?php }?>
 <?php include 'food.php';?>

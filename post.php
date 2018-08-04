@@ -9,9 +9,11 @@ if(!$contents){
 }
 $redisconnect=connectredis();
 $postid=$redisconnect->incr('global:postid');
-$redisconnect->set("post:postid:".$postid.":contents",$contents);
-$redisconnect->set("post:postid:".$postid.":time",time());
-$redisconnect->set("post:postid:".$postid.":userid",$logininfo['userid']);
+/* $redisconnect->set("post:postid:".$postid.":contents",$contents);
+$redisconnect->set("post:postid:".$postid.":times",time());
+$redisconnect->set("post:postid:".$postid.":userid",$logininfo['userid']); */
+$redisconnect->hMset('post:postid:'.$postid,array('contents'=>$contents,'times'=>time(),'userid'=>$logininfo['userid'],'username'=>$logininfo['username']));
+
 
 //微博推送
 $redisconnect->lPush('releasenewlink:'.$logininfo['userid'],$postid);

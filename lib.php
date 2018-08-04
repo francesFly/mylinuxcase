@@ -63,3 +63,16 @@ function randomstr(){
     $randstr=substr($lstr, 2,18);
     return $randstr;
 }
+
+function calculatetime($times){
+    $timesnum=time()-$times;
+    if($timesnum>86400){
+        return floor($timesnum/86400) .'天';
+    }elseif ($timesnum>3600){
+        return floor($timesnum/3600) .'小时';
+    }elseif ($timesnum>60){
+        return floor($timesnum/3600) .'分钟';
+    }else{
+        return $timesnum .'秒';
+    }
+}

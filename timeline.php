@@ -6,7 +6,7 @@ if(($logininfo=islogin())==false){
 }
 $redisconnect=connectredis();
 $newuserlist=array();
-$newuserlist=$redisconnect->sort('newuserlink',array('sore'=>'desc','get'=>'user:userid:*:username'));
+$newuserlist=$redisconnect->sort('newuserlink',array('sort'=>'desc','get'=>'user:userid:*:username'));
 ?>
 <h2>热点</h2>
 <i>最新注册用户(redis中的sort用法)</i><br>
