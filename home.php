@@ -24,7 +24,7 @@ if(!$pulllasttime){
 $redisconnect->set('pulltime:userid:'.$logininfo['userid'],$pulltime);
 $pullnewlistLast=array();
 foreach ($friendinglist as $key=>$values){
-    $pullnewlistLast=array_merge($pullnewlistLast,$redisconnect->zRangeByScore('releasedatas:userid'.$values,$pulllasttime,$pulltime));
+    $pullnewlistLast=array_merge($pullnewlistLast,$redisconnect->zRangeByScore('releasedatas:userid'.$values,$pulllasttime+1,$pulltime));
 }
 sort($pullnewlistLast,SORT_NUMERIC);
 print_r($pullnewlistLast);
