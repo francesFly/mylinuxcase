@@ -32,7 +32,7 @@ if($redisconnect->zCard('releasedatas:userid'.$logininfo['userid'])>20){
 }
 //个人查看 数据 1000
 $redisconnect->lPush('mynewdatas:'.$logininfo['userid'],$postid);
-if($redisconnect->llen('mynewdatas:'.$logininfo['userid'])>1000){
+if($redisconnect->llen('mynewdatas:'.$logininfo['userid'])>10){
     $redisconnect->rpoplpush('mynewdatas:'.$logininfo['userid'],'global:newsdatas');
 }
 
