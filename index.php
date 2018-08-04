@@ -1,4 +1,9 @@
-<?php include 'head.php';?>
+<?php include 'head.php';
+include "lib.php";
+if(islogin()!=false){
+    header("location:home.php");exit();
+}
+?>
 <div id="welcomebox">
 <div id="registerbox">
 <h2>注册!</h2>

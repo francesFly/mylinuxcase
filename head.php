@@ -12,7 +12,6 @@
 <div id="navbar">
 <a href="index.php">主页</a>
 | <a href="timeline.php">热点</a>
-
 | <a href="logout.php">退出</a>
 
 </div>
