@@ -26,9 +26,9 @@ foreach ($fanslist as $key=>$values){
 }
  */
 //微博拉取方式   粉丝查看
-$redisconnect->zAdd('releasedatas:userid'.$logininfo['userid'],$addtime,$postid);
-if($redisconnect->zCard('releasedatas:userid'.$logininfo['userid'])>20){
-    $redisconnect->zRemRangeByRank('releasedatas:userid'.$logininfo['userid'],0,0);
+$redisconnect->zAdd('releasedatas:userid:'.$logininfo['userid'],$addtime,$postid);
+if($redisconnect->zCard('releasedatas:userid:'.$logininfo['userid'])>20){
+    $redisconnect->zRemRangeByRank('releasedatas:userid:'.$logininfo['userid'],0,0);
 }
 //个人查看 数据 1000
 $redisconnect->lPush('mynewdatas:'.$logininfo['userid'],$postid);
