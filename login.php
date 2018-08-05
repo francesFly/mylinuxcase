@@ -17,11 +17,11 @@ $realpassw=$redisconnect->get("user:userid:".$userid.":password");
 if($realpassw!=md5($password)){
     errer("密码输入错误！");
 }
-setcookie("username",$username,time()+300);
-setcookie("userid",$userid,time()+300);
+setcookie("username",$username);
+setcookie("userid",$userid);
 $loginvalidation=randomstr();
 $redisconnect->set('user:userid:'.$userid.':loginvalidation',$loginvalidation);
-$redisconnect->expire('user:userid:'.$userid.':loginvalidation',300);
-setcookie("loginvalidation",$loginvalidation,time()+300);
+//$redisconnect->expire('user:userid:'.$userid.':loginvalidation',300);
+setcookie("loginvalidation",$loginvalidation);//,time()+300
 
 header("location:home.php");
