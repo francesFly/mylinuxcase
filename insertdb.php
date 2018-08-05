@@ -1,5 +1,5 @@
 <?php
-include "lib.php";
+include "/wwwroot/myweb/lib.php";
 $redisconnect=connectredis();
 
 $sql='';
