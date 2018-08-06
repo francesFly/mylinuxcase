@@ -24,7 +24,7 @@ if($mysqli->multi_query($sql)=== TRUE){
     $len=$redisconnect->llen('global:bakpastid');
     for($k=0;$k<$len;$k++){
        $postid=$redisconnect->lPop('global:bakpastid');
-       $redisconnect->hDel('post:postid:'.$postid);
+       $redisconnect->del('post:postid:'.$postid);
     }
     $redisconnect->del('global:bakpastid');
     
