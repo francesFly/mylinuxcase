@@ -37,4 +37,9 @@ foreach ($newnumlist as $key=>$values){
 <i><?php echo calculatetime($newinfo['times']);?>前 通过 web发布</i>
 </div>
 <?php }?>
+<?php 
+for($i=1;$i<$allpage;$i++){
+?>
+<a class="pagebtn" href="profile.php?u=<?php echo $currentname;?>&pagenum=<?php echo $i;?>"><?php echo $i;?></a>
+<?php }?>
 <?php include 'food.php';?>
