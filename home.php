@@ -26,11 +26,14 @@ $pullnewlistLast=array();
 foreach ($friendinglist as $key=>$values){
     $pullnewlistLast=array_merge($pullnewlistLast,$redisconnect->zRangeByScore('releasedatas:userid:'.$values,$pulllasttime+1,$pulltime));
 }
+if($pullnewlistLast){
 sort($pullnewlistLast,SORT_NUMERIC);
+}
+//print_r(count($pullnewlistLast));
 foreach ($pullnewlistLast as $key=>$values){
     $redisconnect->lPush('releasepast:'.$logininfo['userid'],$values);
 }
-$redisconnect->ltrim('releasepast:'.$logininfo['userid'],0,999);
+$redisconnect->ltrim('releasepast:'.$logininfo['userid'],0,20);
 $newnumlist=$redisconnect->sort('releasepast:'.$logininfo['userid'],array('sort'=>'desc'));
 ?>
 <div id="postform">
