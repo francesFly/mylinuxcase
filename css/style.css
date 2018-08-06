@@ -45,6 +45,7 @@ BODY {
     font-size:14px;
     color: #aaa;
 }
+.pagebtn{text-decoration: none; font-size:14px; padding:3px 5px; line-height:20px; border:1px solid #eaeaea;color: #aaa;}
 
 #navbar a {
     text-decoration: none;
@@ -147,4 +148,5 @@ font-size:12px;
     margin-right:0px;
     margin-left:15px;
 }
+
 
