@@ -33,8 +33,14 @@ sort($pullnewlistLast,SORT_NUMERIC);
 foreach ($pullnewlistLast as $key=>$values){
     $redisconnect->lPush('releasepast:'.$logininfo['userid'],$values);
 }
-$redisconnect->ltrim('releasepast:'.$logininfo['userid'],0,20);
-$newnumlist=$redisconnect->sort('releasepast:'.$logininfo['userid'],array('sort'=>'desc'));
+$redisconnect->ltrim('releasepast:'.$logininfo['userid'],0,999);
+//分页
+$allpage=ceil($redisconnect->lLen('releasepast:'.$logininfo['userid'])/20);
+$pagenum=G('pagenum')?G('pagenum'):1;
+$pagestart=($pagenum-1)*20;
+$pageend=$pagenum*20-1;
+$newnumlist=$redisconnect->lrange('releasepast:'.$logininfo['userid'],$pagestart,$pageend);
+//$newnumlist=$redisconnect->sort('releasepast:'.$logininfo['userid'],array('sort'=>'desc'));
 ?>
 <div id="postform">
 <form method="POST" action="post.php">
@@ -54,6 +60,11 @@ $newnumlist=$redisconnect->sort('releasepast:'.$logininfo['userid'],array('sort'
 foreach ($newnumlist as $key=>$values){
     $newinfo=$redisconnect->hMget('post:postid:'.$values,array('username','contents','times'));
 ?>
+<?php 
+for($i=1;$i<$allpage;$i++){
+?>
+<a class="pagebtn" href="home.php?pagenum=<?php echo $i;?>"><?php echo $i;?></a>
+<?php }?>
 <div class="post">
 <a class="username" href="profile.php?u=<?php echo $newinfo['username'];?>"><?php echo $newinfo['username'];?></a> <?php echo $newinfo['contents'];?><br>
 <i><?php echo calculatetime($newinfo['times']);?>前 通过 web发布</i>
