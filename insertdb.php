@@ -21,7 +21,13 @@ if($i==0){
 }
 //$sql=substr($sql, 0,-1);
 if($mysqli->multi_query($sql)=== TRUE){
+    $len=$redisconnect->llen('global:bakpastid');
+    for($k=0;$k<$len;$k++){
+       $postid=$redisconnect->lPop('global:bakpastid');
+       $redisconnect->hDel('post:postid:'.$postid);
+    }
     $redisconnect->del('global:bakpastid');
+    
     echo 'ok';exit();
 }else{
     //导入到global:newsdatas中
