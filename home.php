@@ -60,14 +60,15 @@ $newnumlist=$redisconnect->lrange('releasepast:'.$logininfo['userid'],$pagestart
 foreach ($newnumlist as $key=>$values){
     $newinfo=$redisconnect->hMget('post:postid:'.$values,array('username','contents','times'));
 ?>
-<?php 
-for($i=1;$i<$allpage;$i++){
-?>
-<a class="pagebtn" href="home.php?pagenum=<?php echo $i;?>"><?php echo $i;?></a>
-<?php }?>
+
 <div class="post">
 <a class="username" href="profile.php?u=<?php echo $newinfo['username'];?>"><?php echo $newinfo['username'];?></a> <?php echo $newinfo['contents'];?><br>
 <i><?php echo calculatetime($newinfo['times']);?>前 通过 web发布</i>
 </div>
+<?php }?>
+<?php 
+for($i=1;$i<$allpage;$i++){
+?>
+<a class="pagebtn" href="home.php?pagenum=<?php echo $i;?>"><?php echo $i;?></a>
 <?php }?>
 <?php include 'food.php';?>
